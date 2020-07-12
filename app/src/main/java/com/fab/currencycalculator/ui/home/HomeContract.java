@@ -24,5 +24,6 @@ public interface HomeContract {
         void notifyListUpdate ();
         void showErrorMessage (String errorMessage);
         void generateQr (String hello);
+        void setValue (String result);
     }
 }

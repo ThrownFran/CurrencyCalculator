@@ -2,20 +2,28 @@ package com.fab.currencycalculator.ui.qr_reader;
 
 import android.Manifest;
 
+import com.fab.currencycalculator.BaseApplication;
 import com.fab.currencycalculator.R;
 import com.fab.currencycalculator.ui.Utils;
 import com.fab.currencycalculator.ui.base.BaseFragment;
 import com.google.zxing.Result;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import javax.inject.Inject;
+
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class QrReaderFragment extends BaseFragment implements ZXingScannerView.ResultHandler {
+public class QrReaderFragment extends BaseFragment
+        implements ZXingScannerView.ResultHandler,QrReaderContract.View {
 
     @BindView(R.id.qr_reader_scanner)
     ZXingScannerView mScannerView;
+
+    @Inject
+    QrReaderContract.Presenter presenter;
 
     private RxPermissions rxPermissions;
 
@@ -26,48 +34,63 @@ public class QrReaderFragment extends BaseFragment implements ZXingScannerView.R
 
     @Override
     protected void injectDependencies () {
+        BaseApplication.getInstance()
+                .getAppComponent()
+                .plusQrReader()
+                .create(this)
+                .inject(this);
     }
 
     @Override
-    protected void onCreateFragment () {
-
-    }
-
-    private void checkCameraPermissions () {
+    public void showPermissionView (QrReaderPresenter.PermissionListener listener) {
         rxPermissions = new RxPermissions(this);
         Disposable disposable = rxPermissions
                 .request(Manifest.permission.CAMERA)
                 .subscribe(granted -> {
                     if (granted) {
-                        handleCamera();
+                        listener.onGranted();
                     } else {
-
+                        listener.onRevoked();
                     }
                 });
     }
 
-    private void handleCamera () {
-        // Register ourselves as a handler for scan results.
+    @Override
+    public void showScanner () {
         mScannerView.setResultHandler(this);
-        // Start camera on resume
         mScannerView.startCamera();
+    }
+
+    @Override
+    public void showMessagePermissionRequired () {
+        Utils.showToast(getContext(),getString(R.string.permission_required_camera));
+    }
+
+    @Override
+    public void navigateToHome () {
+        Navigation.findNavController(getView()).popBackStack();
+    }
+
+    @Override
+    public void stopScanner () {
+        mScannerView.stopCamera();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        checkCameraPermissions();
+        presenter.onCreate();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        // Stop camera on pause
-        mScannerView.stopCamera();
+        presenter.onDestroy();
     }
 
     @Override
     public void handleResult (Result result) {
-        Utils.showToast(getContext(),result.getText());
+        presenter.onScanResult(result.getText());
+//        Utils.showToast(getContext(),result.getText());
     }
 }

@@ -22,4 +22,5 @@
     <string name="more">More</string>
     <string name="logout_failed">Logout failed</string>
     <string name="login_title">LOGIN</string>
+    <string name="permission_required_camera">Permission required to scan QR</string>
 </resources>

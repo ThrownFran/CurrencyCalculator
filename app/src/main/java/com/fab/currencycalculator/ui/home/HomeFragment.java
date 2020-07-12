@@ -175,6 +175,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
     }
 
     @Override
+    public void setValue (String result) {
+        editCurrentValue.setText(result);
+    }
+
+    @Override
     public void notifyListUpdate () {
         adapter.notifyDataSetChanged();
     }

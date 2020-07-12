@@ -4,41 +4,69 @@ import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.models.Usd;
 import com.fab.currencycalculator.domain.use_cases.GetCurrencyRateUseCase;
-import com.fab.currencycalculator.ui.QRGenerator;
+import com.fab.currencycalculator.ui.RxBus;
 import com.fab.currencycalculator.ui.base.BasePresenter;
 import com.fab.currencycalculator.ui.base.ErrorMessageFactory;
+import com.fab.currencycalculator.ui.qr_reader.QrResultEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter {
 
     private GetCurrencyRateUseCase getCurrencyRateUseCase;
+    private RxBus bus;
+    private List<Currency> currencyList;
 
     private float currentValue;
     private Currency currentCurrency;
     private RateModel currentRate;
     private List<RateModel> rateList = new ArrayList<>();
-    private List<Currency> currencyList;
-    private int requestTotal = 0;
-    private int requestFinished = 0;
+    private int requestsStarted = 0;
+    private int requestsFinished = 0;
 
     @Inject
     public HomePresenter (HomeContract.View view,
                           GetCurrencyRateUseCase getCurrencyRateUseCase,
                           List<Currency> currencyList,
+                          RxBus bus,
                           ErrorMessageFactory errorMessageFactory) {
         super(view,errorMessageFactory);
         this.getCurrencyRateUseCase = getCurrencyRateUseCase;
         this.currencyList = currencyList;
+        this.bus = bus;
     }
 
     @Override
     public void onCreate () {
         super.onCreate();
         view.setupViewComponents(currencyList);
+        setDefaultCurrency();
+        setupBus();
+    }
+
+    private void setupBus () {
+        addDisposible(bus.toPublishObservable()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object -> {
+                    if (object instanceof QrResultEvent) {
+                        onEventQrResult((QrResultEvent)object);
+                    }
+                }));
+    }
+
+    private void onEventQrResult (QrResultEvent event) {
+        view.setValue(event.result);
+        bus.removeSticky();
+    }
+
+    private void setDefaultCurrency () {
         this.currentCurrency = currencyList.get(0);
     }
 
@@ -107,8 +135,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     private void handleCalculateAllCurrencies () {
 
-        requestFinished = 0;
-        requestTotal = 0;
+        requestsFinished = 0;
+        requestsStarted = 0;
 
         for(Currency currency : currencyList){
 
@@ -121,7 +149,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                     .Params(currency))
                     .doOnSubscribe( disposable -> {
                         view.showProgress();
-                        requestTotal++;
+                        requestsStarted++;
                     })
                     .doFinally(view::hideProgress)
                     .subscribe(this :: onSuccessToGetCurrencyRate, this :: onError));
@@ -132,16 +160,21 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     private void onError (Throwable throwable) {
         view.hideProgress();
         view.showErrorMessage(getErrorMessage(throwable));
+        requestsFinished++;
     }
 
     private void onSuccessToGetCurrencyRate (GetCurrencyRateUseCase.Result result) {
         rateList.add(result.rateModel);
         view.notifyListUpdate();
-        requestFinished++;
+        requestsFinished++;
 
-        if(requestFinished == requestTotal){
-            view.generateQr("hello");
+        if(isRequestFinished()){
+            view.generateQr(String.valueOf(currentValue));
         }
+    }
+
+    private boolean isRequestFinished () {
+        return requestsFinished == requestsStarted;
     }
 
     //region Helper class
