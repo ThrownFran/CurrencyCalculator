@@ -23,5 +23,6 @@ public interface HomeContract {
         void setupViewComponents (List<Currency> currencyList);
         void notifyListUpdate ();
         void showErrorMessage (String errorMessage);
+        void generateQr (String hello);
     }
 }

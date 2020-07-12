@@ -1,10 +1,14 @@
 package com.fab.currencycalculator.ui.home;
 
+import android.graphics.Point;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -16,12 +20,15 @@ import butterknife.BindView;
 import com.fab.currencycalculator.BaseApplication;
 import com.fab.currencycalculator.R;
 import com.fab.currencycalculator.domain.models.Currency;
+import com.fab.currencycalculator.ui.QRGenerator;
 import com.fab.currencycalculator.ui.Utils;
 import com.fab.currencycalculator.ui.base.BaseFragment;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static android.content.Context.WINDOW_SERVICE;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View{
 
@@ -35,6 +42,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
     RecyclerView recyclerView;
     @BindView(R.id.home_button_calculate)
     Button buttonCalculate;
+    @BindView(R.id.home_image_qr)
+    ImageView imageQr;
 
     @Inject
     HomeContract.Presenter presenter;
@@ -147,6 +156,22 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
     private void onSelectCurrency (Currency currency) {
         presenter.onSelectCurrency(currency);
         clickCalculate();
+    }
+
+    @Override
+    public void generateQr (String input) {
+
+        WindowManager manager = (WindowManager) getContext().getSystemService(WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        int width = point.x;
+        int height = point.y;
+        int smallerDimension = width < height ? width : height;
+        smallerDimension = smallerDimension * 3 / 4;
+
+        QRGenerator qrGenerator = new QRGenerator(input,smallerDimension);
+        imageQr.setImageBitmap(qrGenerator.getBitmap());
     }
 
     @Override

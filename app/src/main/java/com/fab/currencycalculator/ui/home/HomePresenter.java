@@ -1,11 +1,10 @@
 package com.fab.currencycalculator.ui.home;
 
-import com.fab.currencycalculator.domain.SessionManager;
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.models.Usd;
-import com.fab.currencycalculator.domain.use_cases.CheckValidTokenUseCase;
 import com.fab.currencycalculator.domain.use_cases.GetCurrencyRateUseCase;
+import com.fab.currencycalculator.ui.QRGenerator;
 import com.fab.currencycalculator.ui.base.BasePresenter;
 import com.fab.currencycalculator.ui.base.ErrorMessageFactory;
 
@@ -23,6 +22,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     private RateModel currentRate;
     private List<RateModel> rateList = new ArrayList<>();
     private List<Currency> currencyList;
+    private int requestTotal = 0;
+    private int requestFinished = 0;
 
     @Inject
     public HomePresenter (HomeContract.View view,
@@ -106,6 +107,9 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     private void handleCalculateAllCurrencies () {
 
+        requestFinished = 0;
+        requestTotal = 0;
+
         for(Currency currency : currencyList){
 
             if(currentCurrency.getCode().equals(currency.getCode())
@@ -115,7 +119,10 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
             addDisposible(getCurrencyRateUseCase.execute(new GetCurrencyRateUseCase
                     .Params(currency))
-                    .doOnSubscribe( disposable -> view.showProgress())
+                    .doOnSubscribe( disposable -> {
+                        view.showProgress();
+                        requestTotal++;
+                    })
                     .doFinally(view::hideProgress)
                     .subscribe(this :: onSuccessToGetCurrencyRate, this :: onError));
         }
@@ -130,6 +137,11 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     private void onSuccessToGetCurrencyRate (GetCurrencyRateUseCase.Result result) {
         rateList.add(result.rateModel);
         view.notifyListUpdate();
+        requestFinished++;
+
+        if(requestFinished == requestTotal){
+            view.generateQr("hello");
+        }
     }
 
     //region Helper class
