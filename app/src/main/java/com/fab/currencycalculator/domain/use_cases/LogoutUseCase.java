@@ -24,9 +24,5 @@ public class LogoutUseCase extends BaseUseCase<LogoutUseCase.Result, LogoutUseCa
     }
 
     public static class Params {}
-
-    public static class Result {
-        public Result () {
-        }
-    }
+    public static class Result {}
 }

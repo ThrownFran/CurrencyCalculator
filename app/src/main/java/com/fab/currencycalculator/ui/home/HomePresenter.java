@@ -2,6 +2,7 @@ package com.fab.currencycalculator.ui.home;
 
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.RateModel;
+import com.fab.currencycalculator.domain.models.Usd;
 import com.fab.currencycalculator.domain.use_cases.GetCurrencyRateUseCase;
 import com.fab.currencycalculator.ui.base.BasePresenter;
 import com.fab.currencycalculator.ui.base.ErrorMessageFactory;
@@ -35,6 +36,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     public void onCreate () {
         super.onCreate();
         view.setupViewComponents(currencyList);
+        this.currentCurrency = currencyList.get(0);
     }
 
     @Override
@@ -66,8 +68,20 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         this.currentValue = validator.value;
         this.rateList.clear();
 
-        handleCalculateCurrentRate();
+        if(currentCurrency instanceof Usd){
+            this.currentRate = new RateModel(currentCurrency,1);
+            handleCalculateAllCurrencies();
+        }else{
+            handleCalculateCurrentRate();
+        }
     }
+
+    @Override
+    public void onSelectCurrency (Currency currency) {
+        this.currentCurrency = currency;
+    }
+
+    //endregion Click events
 
     private void handleCalculateCurrentRate () {
         addDisposible(getCurrencyRateUseCase.execute(new GetCurrencyRateUseCase
@@ -84,31 +98,23 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     }
 
     @Override
-    public void onSelectCurrency (Currency currency) {
-        this.currentCurrency = currency;
-    }
-
-    //endregion Click events
-
-    @Override
     public float getCurrentValue () {
         return currentValue;
     }
 
     private void handleCalculateAllCurrencies () {
 
-        view.showProgress();
+        for(Currency currency : currencyList){
 
-        for(Currency pairCurrency : currencyList){
-
-            if(currentCurrency == pairCurrency){
+            if(currentCurrency.getCode().equals(currency.getCode())
+                    || currency instanceof Usd){
                 continue;
             }
 
             addDisposible(getCurrencyRateUseCase.execute(new GetCurrencyRateUseCase
-                    .Params(pairCurrency))
+                    .Params(currency))
                     .doOnSubscribe( disposable -> view.showProgress())
-                    .doFinally(()-> view.hideProgress())
+                    .doFinally(view::hideProgress)
                     .subscribe(this :: onSuccessToGetCurrencyRate, this :: onError));
         }
 

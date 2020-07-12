@@ -19,7 +19,7 @@ public class CurrencyStaticDataSource implements CurrencyDataSource {
         if(currency instanceof Petro){
             return new RateModel(currency,58.97F);
         }else if(currency instanceof BS){
-            return new RateModel(currency,0.005F);
+            return new RateModel(currency,0.000005F);
         }else{
             throw new IllegalArgumentException("Not supported currency "+currency.toString());
         }
