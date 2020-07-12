@@ -84,12 +84,6 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder> {
             textValue.setText(String.valueOf(value));
             textValue.append(" ");
             textValue.append(rateResult.currency.getName());
-
-//            textValue.setText(String.valueOf(model.getValueInThisCurrency(
-//                    presenter.getCurrentRate()) * presenter.getCurrentValue()));
-//
-//            textValue.append(" ");
-//            textValue.append(model.getCurrency().getName());
         }
     }
 }

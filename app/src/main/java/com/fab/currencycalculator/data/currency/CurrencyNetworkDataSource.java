@@ -1,8 +1,8 @@
-package com.fab.currencycalculator.data;
+package com.fab.currencycalculator.data.currency;
 
+import com.fab.currencycalculator.data.exceptions.NoConnectionException;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.use_cases.GetCurrencyRateUseCase;
-import com.fab.currencycalculator.domain.use_cases.GetGenericCurrencyRateUseCase;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 
-public class CurrencyNetworkDataSource implements CurrencyDataSource {
+public class CurrencyNetworkDataSource {
 
     private CurrencyApi api;
 
@@ -21,25 +21,6 @@ public class CurrencyNetworkDataSource implements CurrencyDataSource {
         this.api = api;
     }
 
-    @Override
-    public Single<GetGenericCurrencyRateUseCase.Result> getCurrencyRate (GetGenericCurrencyRateUseCase.Params params) {
-
-        return null;
-//        RateSymbolGenerator symbolGenerator = new RateSymbolGenerator(
-//                params.mainCurrency,
-//                params.pairCurrency);
-//
-//        Single<RateResponse> singleResponse = api.getRate(symbolGenerator.getSymbol());
-//        Single<GetGenericCurrencyRateUseCase.Result> singleResult = singleResponse
-//                .map(rateResponse -> new GetGenericCurrencyRateUseCase.Result(
-//                        new RateModel(params.mainCurrency,
-//                                params.pairCurrency,
-//                                Float.parseFloat(rateResponse.price))));
-//
-//        return handleErrorIfPresent(singleResult);
-    }
-
-    @Override
     public Single<GetCurrencyRateUseCase.Result> getCurrencyRate (GetCurrencyRateUseCase.Params params) {
 
         RateSymbolGenerator symbolGenerator = new RateSymbolGenerator(

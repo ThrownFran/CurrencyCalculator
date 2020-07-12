@@ -16,6 +16,7 @@ import butterknife.BindView;
 import com.fab.currencycalculator.BaseApplication;
 import com.fab.currencycalculator.R;
 import com.fab.currencycalculator.domain.models.Currency;
+import com.fab.currencycalculator.ui.Utils;
 import com.fab.currencycalculator.ui.base.BaseFragment;
 
 import java.util.List;
@@ -89,6 +90,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
         }
 
         presenter.clickCalculate(value);
+        Utils.hideSoftKeyboard(getActivity());
+        editCurrentValue.clearFocus();
     }
 
     private void setupRecyclerValues () {
@@ -143,6 +146,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
 
     private void onSelectCurrency (Currency currency) {
         presenter.onSelectCurrency(currency);
+        clickCalculate();
     }
 
     @Override

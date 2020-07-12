@@ -17,14 +17,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.120000005">
+        app:layout_constraintVertical_bias="0.050000012">
 
         <EditText
             android:id="@+id/home_edit_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/all_enter_value"
-            android:inputType="numberSigned"
+            android:inputType="numberDecimal"
             android:paddingBottom="15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,7 +44,8 @@
         android:id="@+id/home_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +55,10 @@
         android:id="@+id/home_button_calculate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/colorAccent"
         android:text="@string/calculate"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/home_input_value"
         app:layout_constraintStart_toStartOf="@+id/home_input_value"
         app:layout_constraintTop_toBottomOf="@+id/home_spinner_currencies" />

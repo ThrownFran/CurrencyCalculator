@@ -1,14 +1,14 @@
 package com.fab.currencycalculator.domain.models;
 
-public class Bitcoin implements Currency{
+public class Petro implements Currency {
 
     @Override
     public String getName () {
-        return "Bitcoin";
+        return "Petro";
     }
 
     @Override
     public String getCode () {
-        return "BTC";
+        return "PTR";
     }
 }

@@ -3,7 +3,8 @@ package com.fab.currencycalculator.ui.base;
 import android.content.res.Resources;
 
 import com.fab.currencycalculator.R;
-import com.fab.currencycalculator.data.NoConnectionException;
+import com.fab.currencycalculator.data.exceptions.LogoutFailedException;
+import com.fab.currencycalculator.data.exceptions.NoConnectionException;
 
 import javax.inject.Inject;
 
@@ -24,6 +25,8 @@ public class ErrorMessageFactory {
 
         if (e instanceof NoConnectionException) {
             message = resources.getString(R.string.all_no_connection);
+        }else if(e instanceof LogoutFailedException){
+            message = resources.getString(R.string.logout_failed);
         }
 
         return message;

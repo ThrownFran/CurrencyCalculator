@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.fab.currencycalculator.BaseApplication;
-import com.fab.currencycalculator.data.CurrencyApi;
-import com.fab.currencycalculator.data.CurrencyDataSource;
-import com.fab.currencycalculator.data.CurrencyNetworkDataSource;
+import com.fab.currencycalculator.data.currency.CurrencyApi;
+import com.fab.currencycalculator.data.currency.CurrencyDataSource;
+import com.fab.currencycalculator.data.currency.CurrencyNetworkDataSource;
 import com.fab.currencycalculator.domain.schedulers.SchedulersFacade;
 import com.fab.currencycalculator.ui.base.schedulers.SchedulersFacadeImp;
 
@@ -48,10 +48,6 @@ public class ApplicationModule {
         return new SchedulersFacadeImp();
     }
 
-    @Singleton
-    @Provides
-    CurrencyDataSource dataSource (CurrencyApi api) {
-        return new CurrencyNetworkDataSource(api);
-    }
+
 
 }

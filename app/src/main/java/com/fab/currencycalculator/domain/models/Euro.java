@@ -1,7 +1,5 @@
 package com.fab.currencycalculator.domain.models;
 
-import com.fab.currencycalculator.data.CurrencyApi;
-
 public class Euro implements Currency {
 
     @Override

@@ -54,11 +54,15 @@ dependencies {
 
     //Dagger
     api "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+    implementation 'androidx.annotation:annotation:1.1.0'
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
 
     //Butterknife
     implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
+
+    //QR generator
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

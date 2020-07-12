@@ -6,4 +6,20 @@
     <string name="calculate">Calculate</string>
     <string name="all_unknown_error">Unknown error</string>
     <string name="all_no_connection">No connection available. Please try again.</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_username_empty">Username is empty!</string>
+    <string name="login_password_empty">Password is empty!</string>
+    <string name="login_password_length_invalid">Password must have more than 5 characters.</string>
+    <string name="logout">Log out</string>
+    <string name="more">More</string>
+    <string name="logout_failed">Logout failed</string>
+    <string name="login_title">LOGIN</string>
 </resources>

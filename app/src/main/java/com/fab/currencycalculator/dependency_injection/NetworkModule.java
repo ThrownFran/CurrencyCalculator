@@ -1,7 +1,7 @@
 package com.fab.currencycalculator.dependency_injection;
 
 
-import com.fab.currencycalculator.data.CurrencyApi;
+import com.fab.currencycalculator.data.currency.CurrencyApi;
 
 import java.util.concurrent.TimeUnit;
 

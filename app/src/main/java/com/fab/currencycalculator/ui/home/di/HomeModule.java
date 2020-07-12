@@ -2,10 +2,12 @@ package com.fab.currencycalculator.ui.home.di;
 
 
 import com.fab.currencycalculator.dependency_injection.PresentationScope;
+import com.fab.currencycalculator.domain.models.BS;
 import com.fab.currencycalculator.domain.models.Bitcoin;
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.Ethereum;
 import com.fab.currencycalculator.domain.models.Euro;
+import com.fab.currencycalculator.domain.models.Petro;
 import com.fab.currencycalculator.domain.models.Usd;
 import com.fab.currencycalculator.ui.home.HomeContract;
 import com.fab.currencycalculator.ui.home.HomeFragment;
@@ -26,9 +28,11 @@ public abstract class HomeModule {
     @Provides
     static List<Currency> getCurrencies () {
         List<Currency> currencyList = new ArrayList<>();
-        currencyList.add(new Bitcoin());
-        currencyList.add(new Ethereum());
         currencyList.add(new Euro());
+        currencyList.add(new Ethereum());
+        currencyList.add(new Bitcoin());
+        currencyList.add(new BS());
+        currencyList.add(new Petro());
         return currencyList;
     }
 

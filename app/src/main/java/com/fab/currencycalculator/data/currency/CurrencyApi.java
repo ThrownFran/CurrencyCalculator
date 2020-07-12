@@ -1,8 +1,7 @@
-package com.fab.currencycalculator.data;
+package com.fab.currencycalculator.data.currency;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface CurrencyApi {

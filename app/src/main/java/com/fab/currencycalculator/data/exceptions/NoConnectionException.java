@@ -1,4 +1,4 @@
-package com.fab.currencycalculator.data;
+package com.fab.currencycalculator.data.exceptions;
 
 public class NoConnectionException extends Exception{
 

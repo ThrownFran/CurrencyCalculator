@@ -8,7 +8,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected abstract void injectDependencies ();
+    protected void injectDependencies (){}
     public abstract int getLayout ();
 
     @Override
