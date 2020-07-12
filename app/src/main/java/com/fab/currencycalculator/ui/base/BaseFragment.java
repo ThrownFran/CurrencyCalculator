@@ -12,8 +12,8 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     public abstract int getLayout ();
-    protected abstract void injectDependencies ();
-    protected abstract void onCreateFragment ();
+    protected void injectDependencies (){}
+    protected void onCreateFragment (){}
 
     public View onCreateView (@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(getLayout(), container, false);

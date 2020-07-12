@@ -2,4 +2,8 @@
     <string name="app_name">CurrencyCalculator</string>
     <string name="title_home">Calculate</string>
     <string name="title_qr_reader">QR Reader</string>
+    <string name="all_enter_value">Enter value</string>
+    <string name="calculate">Calculate</string>
+    <string name="all_unknown_error">Unknown error</string>
+    <string name="all_no_connection">No connection available. Please try again.</string>
 </resources>

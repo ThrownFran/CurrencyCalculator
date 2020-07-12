@@ -15,7 +15,7 @@
         android:id="@+id/navigation_qr_reader"
         android:name="com.fab.currencycalculator.ui.qr_reader.QrReaderFragment"
         android:label="@string/title_qr_reader"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_qrReader" />
 
 
 </navigation>

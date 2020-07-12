@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/item_rate_text_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:text="0.4 ETH"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_rate_text_rate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="12sp"
+        tools:text="1 BTC = 0.000123 ETH"
+        app:layout_constraintEnd_toEndOf="@+id/item_rate_text_value"
+        app:layout_constraintStart_toStartOf="@+id/item_rate_text_value"
+        app:layout_constraintTop_toBottomOf="@+id/item_rate_text_value" />
+</androidx.constraintlayout.widget.ConstraintLayout>
