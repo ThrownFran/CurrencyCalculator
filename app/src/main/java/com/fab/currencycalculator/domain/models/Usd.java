@@ -4,7 +4,7 @@ public class Usd implements Currency {
 
     @Override
     public String getName () {
-        return "US dollars";
+        return "US dollar";
     }
 
     @Override

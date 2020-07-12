@@ -1,8 +1,12 @@
 package com.fab.currencycalculator.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import com.fab.currencycalculator.ui.home.HomeFragment;
 
 public abstract class Utils {
 
@@ -24,4 +28,7 @@ public abstract class Utils {
         }
     }
 
+    public static void showToast (Context context, String message) {
+        Toast.makeText(context,message,Toast.LENGTH_LONG).show();
+    }
 }

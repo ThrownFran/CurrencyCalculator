@@ -3,9 +3,11 @@ package com.fab.currencycalculator.data.authentification;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.fab.currencycalculator.domain.SessionManager;
+
 import javax.inject.Inject;
 
-public class StorageManager {
+public class SessionManagerImp implements SessionManager {
 
     private static final String PREFERENCES_APP = "currencycalculator.app.preferences";
     private static final String USER_NAME = "username";
@@ -16,7 +18,7 @@ public class StorageManager {
     private SharedPreferences appPreferences;
 
     @Inject
-    public StorageManager (Context context) {
+    public SessionManagerImp (Context context) {
         this.context = context;
         appPreferences = context.getSharedPreferences(PREFERENCES_APP, Context.MODE_PRIVATE);
         appEditor = appPreferences.edit();
@@ -27,6 +29,7 @@ public class StorageManager {
         appEditor.commit();
     }
 
+    @Override
     public String getUsername () {
         return appPreferences.getString(USER_NAME, null);
     }
@@ -36,6 +39,7 @@ public class StorageManager {
         appEditor.commit();
     }
 
+    @Override
     public String getToken () {
         return appPreferences.getString(TOKEN, null);
     }

@@ -1,8 +1,10 @@
 package com.fab.currencycalculator.ui.home;
 
+import com.fab.currencycalculator.domain.SessionManager;
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.models.Usd;
+import com.fab.currencycalculator.domain.use_cases.CheckValidTokenUseCase;
 import com.fab.currencycalculator.domain.use_cases.GetCurrencyRateUseCase;
 import com.fab.currencycalculator.ui.base.BasePresenter;
 import com.fab.currencycalculator.ui.base.ErrorMessageFactory;

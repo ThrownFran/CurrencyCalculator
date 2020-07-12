@@ -8,14 +8,11 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.fab.currencycalculator.ui.home.HomeFragment"
-        android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_qr_reader"
-        android:name="com.fab.currencycalculator.ui.qr_reader.QrReaderFragment"
-        android:label="@string/title_qr_reader"
-        tools:layout="@layout/fragment_qrReader" />
+        android:name="com.fab.currencycalculator.ui.qr_reader.QrReaderFragment"/>
 
 
 </navigation>

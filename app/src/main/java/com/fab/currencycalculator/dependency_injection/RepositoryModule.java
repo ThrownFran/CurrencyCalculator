@@ -5,11 +5,10 @@ package com.fab.currencycalculator.dependency_injection;
 import com.fab.currencycalculator.data.authentification.AuthDataSource;
 import com.fab.currencycalculator.data.authentification.AuthRepositoryImp;
 import com.fab.currencycalculator.data.authentification.AuthStorageSource;
-import com.fab.currencycalculator.data.authentification.StorageManager;
+import com.fab.currencycalculator.data.authentification.SessionManagerImp;
 import com.fab.currencycalculator.data.currency.CurrencyApi;
 import com.fab.currencycalculator.data.currency.CurrencyNetworkDataSource;
 import com.fab.currencycalculator.data.currency.CurrencyRepositoryImp;
-import com.fab.currencycalculator.data.currency.CurrencyDataSource;
 import com.fab.currencycalculator.data.currency.CurrencyStaticDataSource;
 import com.fab.currencycalculator.domain.repositories.AuthRepository;
 import com.fab.currencycalculator.domain.repositories.CurrencyRepository;
@@ -37,7 +36,7 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    AuthDataSource authDataSource (StorageManager storageManager) {
+    AuthDataSource authDataSource (SessionManagerImp storageManager) {
         return new AuthStorageSource(storageManager);
     }
 

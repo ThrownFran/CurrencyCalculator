@@ -1,7 +1,6 @@
 package com.fab.currencycalculator.domain.use_cases;
 
-import com.fab.currencycalculator.data.authentification.StorageManager;
-import com.fab.currencycalculator.domain.repositories.AuthRepository;
+import com.fab.currencycalculator.data.authentification.SessionManagerImp;
 import com.fab.currencycalculator.domain.schedulers.SchedulersFacade;
 
 import javax.inject.Inject;
@@ -11,11 +10,11 @@ import io.reactivex.Single;
 public class CheckValidTokenUseCase extends BaseUseCase<CheckValidTokenUseCase.Result,
         CheckValidTokenUseCase.Params> {
 
-    private StorageManager storageManager;
+    private SessionManagerImp storageManager;
 
     @Inject
     public CheckValidTokenUseCase (SchedulersFacade schedulers,
-                                   StorageManager storageManager) {
+                                   SessionManagerImp storageManager) {
         super(schedulers);
         this.storageManager = storageManager;
     }

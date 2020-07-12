@@ -9,9 +9,14 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {ApplicationModule.class, NetworkModule.class, RepositoryModule.class})
+@Component(modules = {ApplicationModule.class,
+        NetworkModule.class,
+        RepositoryModule.class,
+        SessionModule.class})
 public interface ApplicationComponent {
     HomeComponent.Factory plusHome ();
+
     LoginComponent.Factory plusLogin ();
-    MainComponent.Factory plusMain();
+
+    MainComponent.Factory plusMain ();
 }

@@ -107,7 +107,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
 
     @Override
     public void showErrorMessage (String errorMessage) {
-        Toast.makeText(getContext(),errorMessage,Toast.LENGTH_LONG).show();
+        Utils.showToast(getActivity(),errorMessage);
     }
 
     @Override

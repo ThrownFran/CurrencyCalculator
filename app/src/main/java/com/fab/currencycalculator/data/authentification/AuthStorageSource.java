@@ -10,10 +10,10 @@ import io.reactivex.Single;
 
 public class AuthStorageSource implements AuthDataSource {
 
-    private StorageManager storageManager;
+    private SessionManagerImp storageManager;
 
     @Inject
-    public AuthStorageSource (StorageManager storageManager) {
+    public AuthStorageSource (SessionManagerImp storageManager) {
         this.storageManager = storageManager;
     }
 

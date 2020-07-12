@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.fab.currencycalculator.BaseApplication;
 import com.fab.currencycalculator.R;
+import com.fab.currencycalculator.ui.Utils;
 import com.fab.currencycalculator.ui.auth.LoginActivity;
 import com.fab.currencycalculator.ui.base.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,7 +47,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter.onCreate();
         setupBottomNavView();
+    }
+
+    @Override
+    protected void onDestroy () {
+        presenter.onDestroy();
+        super.onDestroy();
     }
 
     private void setupBottomNavView () {
@@ -69,6 +77,21 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     public NavController getNavController () {
         return Navigation.findNavController(this, R.id.nav_host_fragment);
+    }
+
+    @Override
+    public void showUsername (String username) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.welcome));
+        stringBuilder.append(" ");
+        stringBuilder.append(username);
+        getSupportActionBar().setTitle(stringBuilder.toString());
+    }
+
+    @Override
+    public void showGenericMessage (String errorMessage) {
+        Utils.showToast(this,errorMessage);
     }
 
     @Override
