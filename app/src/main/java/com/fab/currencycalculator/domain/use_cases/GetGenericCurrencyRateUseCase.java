@@ -9,13 +9,13 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 
-public class GetCurrencyRateUseCase extends BaseUseCase<GetCurrencyRateUseCase.Result, GetCurrencyRateUseCase.Params> {
+public class GetGenericCurrencyRateUseCase extends BaseUseCase<GetGenericCurrencyRateUseCase.Result, GetGenericCurrencyRateUseCase.Params> {
 
     private CurrencyRepository repository;
 
     @Inject
-    public GetCurrencyRateUseCase (SchedulersFacade schedulers,
-                                   CurrencyRepository repository) {
+    public GetGenericCurrencyRateUseCase (SchedulersFacade schedulers,
+                                          CurrencyRepository repository) {
         super(schedulers);
         this.repository = repository;
     }
@@ -26,10 +26,13 @@ public class GetCurrencyRateUseCase extends BaseUseCase<GetCurrencyRateUseCase.R
     }
 
     public static class Params {
-        public Currency currency;
+        public Currency mainCurrency;
+        public Currency pairCurrency;
 
-        public Params (Currency currency) {
-            this.currency = currency;
+        public Params (Currency mainCurrency,
+                       Currency pairCurrency) {
+            this.mainCurrency = mainCurrency;
+            this.pairCurrency = pairCurrency;
         }
     }
 

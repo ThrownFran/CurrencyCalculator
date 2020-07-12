@@ -1,19 +1,18 @@
 package com.fab.currencycalculator.data;
 
 import com.fab.currencycalculator.domain.models.Currency;
+import com.fab.currencycalculator.domain.models.Usd;
 import com.google.gson.annotations.SerializedName;
 
 public class RateSymbolGenerator {
 
     public Currency mainCurrency;
-    public Currency pairCurrency;
 
-    public RateSymbolGenerator (Currency mainCurrency, Currency pairCurrency) {
+    public RateSymbolGenerator (Currency mainCurrency) {
         this.mainCurrency = mainCurrency;
-        this.pairCurrency = pairCurrency;
     }
 
     public String getSymbol () {
-        return mainCurrency.getCode() + pairCurrency.getCode();
+        return mainCurrency.getCode() + new Usd().getCode();
     }
 }

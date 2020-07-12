@@ -63,18 +63,33 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder> {
         }
 
         private void setRate (RateModel model) {
+
+            RateModel.Result rateResult = model.getValueInThisCurrency(presenter.getCurrentRate());
+            float value = rateResult.value;
+
             textRate.setText(String.valueOf(1));
-            textRate.append(model.getMainCurrency().getName());
             textRate.append(" ");
-            textRate.append(String.valueOf(model.getRate()));
+            textRate.append(presenter.getCurrentRate().getCurrency().getName());
             textRate.append(" ");
-            textRate.append(model.getPairCurrency().getName());
+            textRate.append(String.valueOf(value));
+            textRate.append(" ");
+            textRate.append(rateResult.currency.getName());
         }
 
         private void setValue (RateModel model) {
-            textValue.setText(String.valueOf(model.getRate() * presenter.getCurrentValue()));
+
+            RateModel.Result rateResult = model.getValueInThisCurrency(presenter.getCurrentRate());
+            float value = rateResult.value * presenter.getCurrentValue();
+
+            textValue.setText(String.valueOf(value));
             textValue.append(" ");
-            textValue.append(model.getPairCurrency().getName());
+            textValue.append(rateResult.currency.getName());
+
+//            textValue.setText(String.valueOf(model.getValueInThisCurrency(
+//                    presenter.getCurrentRate()) * presenter.getCurrentValue()));
+//
+//            textValue.append(" ");
+//            textValue.append(model.getCurrency().getName());
         }
     }
 }

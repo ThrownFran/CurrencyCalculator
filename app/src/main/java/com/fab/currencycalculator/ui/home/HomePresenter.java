@@ -3,6 +3,7 @@ package com.fab.currencycalculator.ui.home;
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.use_cases.GetCurrencyRateUseCase;
+import com.fab.currencycalculator.domain.use_cases.GetGenericCurrencyRateUseCase;
 import com.fab.currencycalculator.ui.base.BasePresenter;
 import com.fab.currencycalculator.ui.base.ErrorMessageFactory;
 
@@ -17,6 +18,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     private float currentValue;
     private Currency currentCurrency;
+    private RateModel currentRate;
     private List<RateModel> rateList = new ArrayList<>();
     private List<Currency> currencyList;
 
@@ -46,6 +48,11 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         return rateList;
     }
 
+    @Override
+    public RateModel getCurrentRate () {
+        return currentRate;
+    }
+
     //region Click events
 
     @Override
@@ -59,6 +66,21 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
         this.currentValue = validator.value;
         this.rateList.clear();
+
+        handleCalculateCurrentRate();
+    }
+
+    private void handleCalculateCurrentRate () {
+        addDisposible(getCurrencyRateUseCase.execute(new GetCurrencyRateUseCase
+                .Params(currentCurrency))
+                .doOnSubscribe( disposable -> view.showProgress())
+                .subscribe(this :: onSuccessToGetCurrentRate, this :: onError));
+    }
+
+    private void onSuccessToGetCurrentRate (GetCurrencyRateUseCase.Result result) {
+        this.currentRate = result.rateModel;
+        rateList.add(this.currentRate);
+
         handleCalculateAllCurrencies();
     }
 
@@ -85,7 +107,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
             }
 
             addDisposible(getCurrencyRateUseCase.execute(new GetCurrencyRateUseCase
-                    .Params(currentCurrency,pairCurrency))
+                    .Params(pairCurrency))
                     .doOnSubscribe( disposable -> view.showProgress())
                     .doFinally(()-> view.hideProgress())
                     .subscribe(this :: onSuccessToGetCurrencyRate, this :: onError));

@@ -26,7 +26,6 @@ public abstract class HomeModule {
     @Provides
     static List<Currency> getCurrencies () {
         List<Currency> currencyList = new ArrayList<>();
-        currencyList.add(new Usd());
         currencyList.add(new Bitcoin());
         currencyList.add(new Ethereum());
         currencyList.add(new Euro());

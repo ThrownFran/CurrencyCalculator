@@ -14,6 +14,7 @@ public interface HomeContract {
         void onCreate ();
         void onDestroy ();
         void onSelectCurrency (Currency currency);
+        RateModel getCurrentRate ();
     }
 
     interface View {
