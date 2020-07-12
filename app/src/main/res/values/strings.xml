@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CurrencyCalculator</string>
+    <string name="title_home">Calculate</string>
+    <string name="title_qr_reader">QR Reader</string>
+</resources>
