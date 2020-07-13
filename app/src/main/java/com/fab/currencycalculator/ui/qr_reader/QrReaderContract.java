@@ -19,5 +19,6 @@ public interface QrReaderContract {
         void showMessagePermissionRequired ();
         void navigateToHome ();
         void stopScanner ();
+        void showErrorMessage (String errorMessage);
     }
 }

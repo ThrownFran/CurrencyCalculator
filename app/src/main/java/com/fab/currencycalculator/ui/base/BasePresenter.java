@@ -1,7 +1,5 @@
 package com.fab.currencycalculator.ui.base;
 
-import com.fab.currencycalculator.domain.schedulers.SchedulersFacade;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 

@@ -1,4 +1,4 @@
-package com.fab.currencycalculator.dependency_injection;
+package com.fab.currencycalculator.dependency_injection.modules;
 
 
 import com.fab.currencycalculator.ui.RxBus;

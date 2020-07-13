@@ -3,7 +3,7 @@ package com.fab.currencycalculator.domain.use_cases;
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.repositories.CurrencyRepository;
-import com.fab.currencycalculator.domain.schedulers.SchedulersFacade;
+import com.fab.currencycalculator.domain.SchedulersFacade;
 
 import javax.inject.Inject;
 

@@ -3,7 +3,7 @@ package com.fab.currencycalculator;
 import android.app.Application;
 
 import com.fab.currencycalculator.dependency_injection.ApplicationComponent;
-import com.fab.currencycalculator.dependency_injection.ApplicationModule;
+import com.fab.currencycalculator.dependency_injection.modules.ApplicationModule;
 import com.fab.currencycalculator.dependency_injection.DaggerApplicationComponent;
 
 public class BaseApplication extends Application {

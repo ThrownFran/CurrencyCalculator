@@ -23,4 +23,7 @@
     <string name="logout_failed">Logout failed</string>
     <string name="login_title">LOGIN</string>
     <string name="permission_required_camera">Permission required to scan QR</string>
+    <string name="qr_not_valid">QR data is not supported</string>
+    <string name="currency_not_supported">Currency not supported</string>
+    <string name="recalculate">Recalculate</string>
 </resources>

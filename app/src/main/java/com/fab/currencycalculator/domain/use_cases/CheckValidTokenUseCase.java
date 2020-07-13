@@ -1,7 +1,7 @@
 package com.fab.currencycalculator.domain.use_cases;
 
 import com.fab.currencycalculator.data.authentification.SessionManagerImp;
-import com.fab.currencycalculator.domain.schedulers.SchedulersFacade;
+import com.fab.currencycalculator.domain.SchedulersFacade;
 
 import javax.inject.Inject;
 

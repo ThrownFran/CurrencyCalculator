@@ -1,4 +1,4 @@
-package com.fab.currencycalculator.domain.schedulers;
+package com.fab.currencycalculator.domain;
 
 import io.reactivex.Scheduler;
 

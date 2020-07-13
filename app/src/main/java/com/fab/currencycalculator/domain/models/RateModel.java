@@ -15,6 +15,10 @@ public class RateModel {
         return currency;
     }
 
+    public float getRateInUsd () {
+        return rateInUsd;
+    }
+
     public Result getValueInThisCurrency (RateModel rateOfOtherCurrency) {
 
         if(rateOfOtherCurrency.currency.getCode().equals(currency.getCode())){

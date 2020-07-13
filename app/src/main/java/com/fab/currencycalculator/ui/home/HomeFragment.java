@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +18,13 @@ import butterknife.BindView;
 
 import com.fab.currencycalculator.BaseApplication;
 import com.fab.currencycalculator.R;
+import com.fab.currencycalculator.data.currency.QrResultJson;
 import com.fab.currencycalculator.domain.models.Currency;
+import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.ui.QRGenerator;
 import com.fab.currencycalculator.ui.Utils;
 import com.fab.currencycalculator.ui.base.BaseFragment;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -92,6 +94,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
         });
     }
 
+    @Override
+    public void showCurrencyNotSupportedMessage () {
+        Utils.showToast(getActivity(),getString(R.string.currency_not_supported));
+    }
+
+
     private void clickCalculate () {
         String value = null;
         if(editCurrentValue.getText() != null){
@@ -99,8 +107,20 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
         }
 
         presenter.clickCalculate(value);
+
+        cleanViews();
+    }
+
+    private void cleanViews () {
         Utils.hideSoftKeyboard(getActivity());
         editCurrentValue.clearFocus();
+        imageQr.setVisibility(View.GONE);
+        buttonCalculate.setText(getString(R.string.calculate));
+    }
+
+    @Override
+    public void setRecalculateButton () {
+        buttonCalculate.setText(getString(R.string.recalculate));
     }
 
     private void setupRecyclerValues () {
@@ -139,7 +159,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
                 items);
 
         spinnerCurrencies.setAdapter(adapter);
-
         spinnerCurrencies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected (AdapterView<?> parent, View view, int position,
@@ -159,8 +178,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
     }
 
     @Override
-    public void generateQr (String input) {
+    public void setCurrency (int position) {
+        spinnerCurrencies.setSelection(position);
+    }
 
+    @Override
+    public void generateQr (String input) {
+        QRGenerator qrGenerator = new QRGenerator(input,getSmallQrDimension());
+        imageQr.setImageBitmap(qrGenerator.getBitmap());
+        imageQr.setVisibility(View.VISIBLE);
+    }
+
+    private int getSmallQrDimension () {
         WindowManager manager = (WindowManager) getContext().getSystemService(WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
         Point point = new Point();
@@ -169,14 +198,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
         int height = point.y;
         int smallerDimension = width < height ? width : height;
         smallerDimension = smallerDimension * 3 / 4;
-
-        QRGenerator qrGenerator = new QRGenerator(input,smallerDimension);
-        imageQr.setImageBitmap(qrGenerator.getBitmap());
+        return smallerDimension;
     }
 
     @Override
-    public void setValue (String result) {
-        editCurrentValue.setText(result);
+    public void setValue (float value) {
+        editCurrentValue.setText(String.valueOf(value));
     }
 
     @Override

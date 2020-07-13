@@ -1,5 +1,7 @@
 package com.fab.currencycalculator.data.currency;
 
+import com.fab.currencycalculator.data.currency.sources.CurrencyNetworkDataSource;
+import com.fab.currencycalculator.data.currency.sources.CurrencyStaticDataSource;
 import com.fab.currencycalculator.domain.models.BS;
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.Petro;

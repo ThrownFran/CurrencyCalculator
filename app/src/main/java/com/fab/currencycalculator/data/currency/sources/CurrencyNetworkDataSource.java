@@ -1,5 +1,8 @@
-package com.fab.currencycalculator.data.currency;
+package com.fab.currencycalculator.data.currency.sources;
 
+import com.fab.currencycalculator.data.currency.CurrencyApi;
+import com.fab.currencycalculator.data.currency.RateResponse;
+import com.fab.currencycalculator.data.currency.RateSymbolGenerator;
 import com.fab.currencycalculator.data.exceptions.NoConnectionException;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.use_cases.GetCurrencyRateUseCase;

@@ -1,4 +1,4 @@
-package com.fab.currencycalculator.data.currency;
+package com.fab.currencycalculator.data.currency.sources;
 
 import com.fab.currencycalculator.domain.models.BS;
 import com.fab.currencycalculator.domain.models.Currency;

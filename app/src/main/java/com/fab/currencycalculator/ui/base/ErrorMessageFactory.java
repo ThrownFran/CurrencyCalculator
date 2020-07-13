@@ -5,6 +5,9 @@ import android.content.res.Resources;
 import com.fab.currencycalculator.R;
 import com.fab.currencycalculator.data.exceptions.LogoutFailedException;
 import com.fab.currencycalculator.data.exceptions.NoConnectionException;
+import com.google.gson.JsonParseException;
+
+import java.text.ParseException;
 
 import javax.inject.Inject;
 
@@ -27,6 +30,8 @@ public class ErrorMessageFactory {
             message = resources.getString(R.string.all_no_connection);
         }else if(e instanceof LogoutFailedException){
             message = resources.getString(R.string.logout_failed);
+        }else if(e instanceof JsonParseException){
+            message = resources.getString(R.string.qr_not_valid);
         }
 
         return message;

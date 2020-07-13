@@ -72,6 +72,11 @@ public class QrReaderFragment extends BaseFragment
     }
 
     @Override
+    public void showErrorMessage (String errorMessage) {
+        Utils.showToast(getActivity(),errorMessage);
+    }
+
+    @Override
     public void stopScanner () {
         mScannerView.stopCamera();
     }
@@ -91,6 +96,5 @@ public class QrReaderFragment extends BaseFragment
     @Override
     public void handleResult (Result result) {
         presenter.onScanResult(result.getText());
-//        Utils.showToast(getContext(),result.getText());
     }
 }

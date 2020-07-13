@@ -1,5 +1,6 @@
 package com.fab.currencycalculator.ui.home;
 
+import com.fab.currencycalculator.domain.CurrencyParser;
 import com.fab.currencycalculator.domain.models.Currency;
 import com.fab.currencycalculator.domain.models.RateModel;
 import com.fab.currencycalculator.domain.models.Usd;
@@ -22,6 +23,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     private GetCurrencyRateUseCase getCurrencyRateUseCase;
     private RxBus bus;
     private List<Currency> currencyList;
+    private CurrencyParser currencyParser;
 
     private float currentValue;
     private Currency currentCurrency;
@@ -35,11 +37,13 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                           GetCurrencyRateUseCase getCurrencyRateUseCase,
                           List<Currency> currencyList,
                           RxBus bus,
+                          CurrencyParser currencyParser,
                           ErrorMessageFactory errorMessageFactory) {
         super(view,errorMessageFactory);
         this.getCurrencyRateUseCase = getCurrencyRateUseCase;
         this.currencyList = currencyList;
         this.bus = bus;
+        this.currencyParser = currencyParser;
     }
 
     @Override
@@ -49,6 +53,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         setDefaultCurrency();
         setupBus();
     }
+
+    //region Events
 
     private void setupBus () {
         addDisposible(bus.toPublishObservable()
@@ -62,9 +68,34 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     }
 
     private void onEventQrResult (QrResultEvent event) {
-        view.setValue(event.result);
         bus.removeSticky();
+
+        if(getCurrencyInList(event.currentRate.getCurrency()) == null){
+            view.showCurrencyNotSupportedMessage();
+            return;
+        }
+
+        showQrResult(event);
     }
+
+    private void showQrResult (QrResultEvent event) {
+        this.currentValue = event.result;
+        this.currentRate = event.currentRate;
+
+        view.setValue(event.result);
+        view.setCurrency(currencyList.indexOf(getCurrencyInList(event.currentRate.getCurrency())));
+
+        updateWithQrRateList(event.rateList);
+    }
+
+    private void updateWithQrRateList (List<RateModel> rateList) {
+        this.rateList.clear();
+        this.rateList.addAll(rateList);
+        view.notifyListUpdate();
+        view.setRecalculateButton();
+    }
+
+    //endregion Event
 
     private void setDefaultCurrency () {
         this.currentCurrency = currencyList.get(0);
@@ -169,8 +200,13 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         requestsFinished++;
 
         if(isRequestFinished()){
-            view.generateQr(String.valueOf(currentValue));
+            generateQr();
         }
+    }
+
+    private void generateQr () {
+        String input = currencyParser.createJson(currentValue,currentRate,rateList);
+        view.generateQr(input);
     }
 
     private boolean isRequestFinished () {
@@ -201,6 +237,18 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 isValid = false;
             }
         }
+    }
+
+    private Currency getCurrencyInList (Currency currency) {
+        Currency matcher = null;
+        for(Currency item : currencyList){
+            if(item.getCode().equals(currency.getCode())){
+                matcher = item;
+                break;
+            }
+        }
+
+        return matcher;
     }
 
     //endregion Helper class
